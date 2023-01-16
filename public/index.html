@@ -9,47 +9,25 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <title>StramaChat</title>
-    <style>
-        form {
-            padding: 20px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            padding-right: 50px;
-        }
-
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 100%
-        }
-
-        #messages li {
-            padding: 5px 10px;
-        }
-
-        #messages li:nth-child(odd) {
-            background: #eee;
-        }
-    </style>
 </head>
 <body>
+<div class="container-fluid bg-light p-5">
+    <div class="container">
+        <h1 class="display-4">StramaChat</h1>
+        <p class="lead">Select your StramaRoom</p>
+    </div>
+
+</div>
 <div class="container-fluid">
     <div class="row">
-        <ul id="messages">
-
+        <ul class="list-group col">
+            <a href="/coolest" class="list-group-item list-group-item-action">Coolest boiiis</a>
+            <a href="/bad" class="list-group-item list-group-item-action"> Bad boi</a>
+            <a href="/neutral" class="list-group-item list-group-item-action">Neutral Swiss Boi</a>
         </ul>
+
     </div>
-    <div class="row">
-        <form action="">
-            <div class="input-group mb-3">
-                <input id="m" type="text" class="form-control" autocomplete="off" placeholder="Message..."
-                       aria-label="Message..." aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send</button>
-            </div>
-        </form>
-    </div>
+
 </div>
 
 
@@ -60,29 +38,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
         crossorigin="anonymous"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    const room = 'coooool boiiiiis';
-    const socket = io.connect('/tech');
 
-    $('form').submit(function () {
-        let msg = $('#m').val();
-
-        socket.emit('message', {msg, room});
-
-        $('#m').val('');
-
-        return false;
-    });
-    socket.on('connect', function () {
-        // emiting to everybody
-
-        socket.emit('join', {room: room});
-    });
-
-    socket.on('message', function (msg) {
-        $('#messages').append($('<li>').text(msg));
-    });
-</script>
 </body>
 </html>

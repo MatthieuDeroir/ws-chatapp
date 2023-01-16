@@ -11,23 +11,42 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
+app.get('/coolest', (req, res) => {
+    res.sendFile(__dirname + '/public/coolest.html');
+});
+
+app.get('/bad', (req, res) => {
+    res.sendFile(__dirname + '/public/bad.html');
+});
+
+app.get('/neutral', (req, res) => {
+    res.sendFile(__dirname + '/public/neutral.html');
+});
+
 // namespace
 
-const tech = io.of('/tech');
+const bois = io.of('/bois');
 
-tech.on('connection', (socket) => {
+bois.on('connection', (socket) => {
     socket.on('join', (data) => {
         socket.join(data.room);
-        tech.in(data.room).emit('message', `New user joined the ${data.room} room!`);
+        bois.in(data.room).emit('message', `New user joined the ${data.room} room!`);
+        console.log('User connected to room: ' + data.room);
+
     })
     socket.on('message', (data) => {
         console.log(`message: ${data.msg}`);
-        tech.emit('message', data.msg);
+        bois.emit('message', data.msg);
+    });
+
+    socket.on('connect', () => {
+        console.log('User connected');
+        bois.emit('message', 'User Connected');
     });
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
 
-        tech.emit('message', 'User disconnected');
+        bois.emit('message', 'User Disconnected');
     })
 });

@@ -46,7 +46,7 @@
         crossorigin="anonymous"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    const socket = io.connect('http://localhost:3000');
+    const socket = io.connect('http://192.168.100.62:3000');
     $('form').submit(function () {
         socket.emit('message', $('#m').val());
         $('#m').val('');

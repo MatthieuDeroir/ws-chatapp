@@ -10,10 +10,28 @@
 
     <title>StramaChat</title>
     <style>
-        form {padding: 20px; position: fixed;bottom: 0; width: 100%; padding-right: 50px;}
-        #messages {list-style-type: none; margin: 0; padding: 0; width: 100%}
-        #messages li {padding: 5px 10px;}
-        #messages li:nth-child(odd) {background: #eee;}
+        form {
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding-right: 50px;
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 100%
+        }
+
+        #messages li {
+            padding: 5px 10px;
+        }
+
+        #messages li:nth-child(odd) {
+            background: #eee;
+        }
     </style>
 </head>
 <body>
@@ -35,8 +53,6 @@
 </div>
 
 
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
@@ -48,14 +64,19 @@
 <script>
     const room = 'javascript';
     const socket = io.connect('/tech');
+
     $('form').submit(function () {
         let msg = $('#m').val();
-        socket.emit('message', $('#m').val());
+
+        socket.emit('message', {msg, room});
+
         $('#m').val('');
+
         return false;
     });
     socket.on('connect', function () {
         // emiting to everybody
+
         socket.emit('join', {room: room});
     });
 

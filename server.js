@@ -4,11 +4,11 @@ const io = require('socket.io')(server);
 const port = 3000;
 
 server.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+    console.log(`Listening on port ${port}`);
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 // namespace
@@ -16,11 +16,15 @@ app.get('/', (req, res) => {
 const tech = io.of('/tech');
 
 tech.on('connection', (socket) => {
-    console.log('a user connected');
+    socket.on('join', (data) => {
+        socket.join(data.room);
+        tech.in(data.room).emit('message', `New user joined the ${data.room} room!`);
+    })
     socket.on('message', (msg) => {
         console.log(`message: ${msg}`);
         tech.emit('message', msg);
     });
+
     socket.on('disconnect', () => {
         console.log('User disconnected');
 

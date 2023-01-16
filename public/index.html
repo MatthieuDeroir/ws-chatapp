@@ -52,6 +52,10 @@
         $('#m').val('');
         return false;
     });
+    socket.on('connect', function () {
+        // emiting to everybody
+        socket.emit('message', 'User connected');
+    });
 
     socket.on('message', function (msg) {
         $('#messages').append($('<li>').text(msg));

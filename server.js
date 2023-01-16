@@ -11,15 +11,19 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-io.on('connection', (socket) => {
+// namespace
+
+const tech = io.of('/tech');
+
+tech.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('message', (msg) => {
         console.log(`message: ${msg}`);
-        io.emit('message', msg);
+        tech.emit('message', msg);
     });
     socket.on('disconnect', () => {
         console.log('User disconnected');
 
-        io.emit('message', 'User disconnected');
+        tech.emit('message', 'User disconnected');
     })
 });

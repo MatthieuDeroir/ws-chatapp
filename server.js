@@ -20,9 +20,9 @@ tech.on('connection', (socket) => {
         socket.join(data.room);
         tech.in(data.room).emit('message', `New user joined the ${data.room} room!`);
     })
-    socket.on('message', (msg) => {
-        console.log(`message: ${msg}`);
-        tech.emit('message', msg);
+    socket.on('message', (data) => {
+        console.log(`message: ${data.msg}`);
+        tech.emit('message', data.msg);
     });
 
     socket.on('disconnect', () => {
